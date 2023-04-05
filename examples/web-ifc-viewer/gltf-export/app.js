@@ -25,15 +25,15 @@ async function loadIfc(event) {
     // Export to glTF and JSON
     const result = await viewer.GLTF.exportIfcFileAsGltf({
         ifcFileUrl: url,
-        splitByFloors: true,
+        splitByFloors: false,
         categories: {
             walls: [IFCWALL, IFCWALLSTANDARDCASE],
             slabs: [IFCSLAB],
             windows: [IFCWINDOW],
-            curtainwalls: [IFCMEMBER, IFCELEMENTASSEMBLY, IFCBEAM, IFCPLATE, IFCCURTAINWALL],
+            curtainwalls: [IFCMEMBER, IFCBEAM, IFCMEMBERTYPE, IFCPLATE, IFCCURTAINWALL, IFCMATERIAL, IFCELEMENTASSEMBLY],
             doors: [IFCDOOR]
         },
-        getProperties: true
+        getProperties: false
     });
 
     // Download result
