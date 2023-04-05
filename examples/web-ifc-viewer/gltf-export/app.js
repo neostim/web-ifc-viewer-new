@@ -6,6 +6,7 @@ import {IFCWALL,
     IFCWINDOW,
     IFCMEMBER,
     IFCPLATE,
+    IFCBEAM,
     IFCCURTAINWALL,
     IFCDOOR} from 'web-ifc';
 
