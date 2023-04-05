@@ -5,7 +5,11 @@ import {IFCWALL,
     IFCSLAB,
     IFCWINDOW,
     IFCMEMBER,
+    IFCMEMBERTYPE,
+    IFCMECHANICALFASTENER,
     IFCPLATE,
+    IFCMATERIAL,
+    IFCELEMENTASSEMBLY,
     IFCBEAM,
     IFCCURTAINWALL,
     IFCDOOR} from 'web-ifc';
@@ -31,8 +35,7 @@ async function loadIfc(event) {
             walls: [IFCWALL, IFCWALLSTANDARDCASE],
             slabs: [IFCSLAB],
             windows: [IFCWINDOW],
-            curtainwalls: [IFCBEAM, IFCMEMBER, IFCMEMBERTYPE, IFCPLATE, IFCCURTAINWALL, IFCMATERIAL],
-            test: [IfcMechanicalFastener, IFCMECHANICALFASTENER],
+            curtainwalls: [IFCBEAM, IFCMEMBER, IFCMEMBERTYPE, IFCPLATE, IFCMECHANICALFASTENER, IFCCURTAINWALL, IFCMATERIAL],
             doors: [IFCDOOR]
         },
         getProperties: false
