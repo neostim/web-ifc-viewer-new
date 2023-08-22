@@ -11,6 +11,7 @@ import {IFCWALL,
     IFCMATERIAL,
     IFCELEMENTASSEMBLY,
     IFCBEAM,
+    IFCCOLUMN,
     IFCCURTAINWALL,
     IFCDOOR} from 'web-ifc';
 
