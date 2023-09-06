@@ -27,6 +27,7 @@ async function loadIfc(event) {
     const file = event.target.files[0];
     const url = URL.createObjectURL(file);
     // Export to glTF and JSON
+    // , IFCMECHANICALFASTENER
     const result = await viewer.GLTF.exportIfcFileAsGltf({
         ifcFileUrl: url,
         splitByFloors: false,
@@ -34,7 +35,7 @@ async function loadIfc(event) {
             walls: [IFCWALL, IFCWALLSTANDARDCASE],
             slabs: [IFCSLAB],
             windows: [IFCWINDOW],
-            curtainwalls: [IFCBEAM, IFCMEMBER, IFCCOLUMN, IFCMEMBERTYPE, IFCCOLUMNTYPE, IFCCOLUMNSTANDARDCASE, IFCPLATE, IFCMECHANICALFASTENER, IFCCURTAINWALL, IFCMATERIAL],
+            curtainwalls: [IFCBEAM, IFCMEMBER, IFCCOLUMN, IFCMEMBERTYPE, IFCCOLUMNTYPE, IFCCOLUMNSTANDARDCASE, IFCPLATE, IFCCURTAINWALL, IFCMATERIAL],
             doors: [IFCDOOR]
         },
         getProperties: false
