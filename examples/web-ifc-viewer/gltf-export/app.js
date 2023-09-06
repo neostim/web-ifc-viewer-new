@@ -19,7 +19,7 @@ import {IFCWALL,
 
 const container = document.getElementById('viewer-container');
 const viewer = new IfcViewerAPI({ container, backgroundColor: new Color(0xffffff) });
-viewer.grid.setGrid();
+//viewer.grid.setGrid();
 viewer.axes.setAxes();
 viewer.IFC.setWasmPath("../../../");
 
@@ -35,10 +35,7 @@ async function loadIfc(event) {
         ifcFileUrl: url,
         splitByFloors: false,
         categories: {
-            walls: [IFCWALL, IFCWALLSTANDARDCASE],
-            slabs: [IFCSLAB],
-            windows: [IFCWINDOW],
-            doors: [IFCDOOR],
+            walls: [IFCWALL, IFCWALLSTANDARDCASE]
         },
         getProperties: true
     });
