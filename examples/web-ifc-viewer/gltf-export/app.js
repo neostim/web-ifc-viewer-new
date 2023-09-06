@@ -6,7 +6,7 @@ import {IFCWALL,
     IFCWINDOW,
     IFCMEMBER,
     IFCMEMBERTYPE,
-    IFCMECHANICALFASTENER,
+ //   IFCMECHANICALFASTENER,
     IFCPLATE,
     IFCMATERIAL,
     IFCELEMENTASSEMBLY,
@@ -36,7 +36,7 @@ async function loadIfc(event) {
             walls: [IFCWALL, IFCWALLSTANDARDCASE],
             slabs: [IFCSLAB],
             windows: [IFCWINDOW],
-            curtainwalls: [IFCBEAM, IFCMEMBER, IFCMEMBERTYPE, IFCPLATE, IFCMECHANICALFASTENER, IFCCURTAINWALL, IFCMATERIAL],
+            curtainwalls: [IFCCOLUMN, IFCBEAM, IFCMEMBER, IFCMEMBERTYPE, IFCPLATE, IFCCURTAINWALL, IFCMATERIAL],
             doors: [IFCDOOR]
         },
         getProperties: false
@@ -69,3 +69,5 @@ async function loadIfc(event) {
 
 window.ondblclick = () => viewer.IFC.selector.pickIfcItem(true);
 window.onmousemove = () => viewer.IFC.selector.prePickIfcItem();
+
+//Test
