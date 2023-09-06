@@ -1,7 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 
 export default {
-  input: 'examples/web-ifc-viewer/gltf-export/app.js?version=f36af92',
+  input: 'examples/web-ifc-viewer/gltf-export/app.js',
   output: [
     {
       format: 'esm',
