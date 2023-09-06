@@ -39,7 +39,7 @@ async function loadIfc(event) {
             curtainwalls: [IFCCOLUMN, IFCBEAM, IFCMEMBER, IFCMEMBERTYPE, IFCPLATE, IFCCURTAINWALL, IFCMATERIAL],
             doors: [IFCDOOR]
         },
-        getProperties: false
+        getProperties: true
     });
 
     // Download result
