@@ -41,12 +41,12 @@ async function loadIfc(event) {
     });
 
     // Download result
-    const link = document.createElement('a');
-    document.body.appendChild(link);
+   // const link = document.createElement('a');
+  //  document.body.appendChild(link);
 
-    for(const categoryName in result.gltf) {
-        const category = result.gltf[categoryName];
-        for(const levelName in category) {
+  //  for(const categoryName in result.gltf) {
+  //      const category = result.gltf[categoryName];
+  //      for(const levelName in category) {
             const file = category[levelName].file;
             if(file) {
                 link.download = `${file.name}_${categoryName}_${levelName}.gltf`;
