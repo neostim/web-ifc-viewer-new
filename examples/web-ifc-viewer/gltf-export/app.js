@@ -38,7 +38,7 @@ async function loadIfc(event) {
             walls: [IFCWALL, IFCWALLSTANDARDCASE],
             slabs: [IFCSLAB],
             windows: [IFCWINDOW],
-            curtainwalls: [IFCCOLUMN, IFCBEAM, IFCMEMBER, IFCMEMBERTYPE, IFCPLATE, IFCMECHANICALFASTENER, IFCCURTAINWALL, IFCMATERIAL],
+            curtainwalls: [IFCCOLUMN, IFCMEMBER, IFCMEMBERTYPE, IFCCURTAINWALL, IFCMATERIAL],
             doors: [IFCDOOR]
         },
         getProperties: true
