@@ -1,45 +1,64 @@
-
-import { IfcViewerAPI } from "https://cdn.jsdelivr.net/npm/web-ifc-viewer@latest";
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js";
-import { GLTFExporter } from "https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/exporters/GLTFExporter.js";
-
-const container = document.getElementById("viewer-container");
-const viewer = new IfcViewerAPI({ container });
-
-// ✅ Load an externally hosted IFC file
-viewer.IFC.loadIfcUrl("https://03587f8.netsolhost.com/B201.ifc");
-
-// 🎨 Define colors for different types
-const colors = {
-    "IFCBEAM": 0xff0000,   // Red
-    "IFCPLATE": 0x00ff00,  // Green
-    "IFCBOLT": 0x0000ff    // Blue
-};
-
-// Function to colorize IFC elements
-async function colorizeIfcElements(type, color) {
-    const modelID = viewer.IFC.loader.ifcManager.state.models[0].modelID;
-    const elements = await viewer.IFC.getAllItemsOfType(modelID, viewer.IFC.types[type], false);
-
-    const material = new THREE.MeshLambertMaterial({ color });
-
-    elements.forEach(id => {
-        const mesh = viewer.IFC.loader.ifcManager.getMesh(modelID, id);
-        if (mesh) mesh.material = material;
+import { Color } from 'three';
+import { IfcViewerAPI } from 'web-ifc-viewer';
+import {IFCWALL,
+    IFCWALLSTANDARDCASE,
+    IFCSLAB,
+    IFCWINDOW,
+    IFCMEMBER,
+    IFCMEMBERTYPE,
+    IFCMECHANICALFASTENER,
+    IFCPLATE,
+    IFCMATERIAL,
+    IFCELEMENTASSEMBLY,
+    IFCBEAM,
+    IFCCOLUMN,
+    IFCCOLUMNTYPE,
+    IFCCOLUMNSTANDARDCASE,    
+    IFCCURTAINWALL,
+    IFCDOOR} from 'web-ifc';
+const container = document.getElementById('viewer-container');
+const viewer = new IfcViewerAPI({ container, backgroundColor: new Color(0xffffff) });
+viewer.grid.setGrid();
+viewer.axes.setAxes();
+viewer.IFC.setWasmPath("../../../");
+const input = document.getElementById('file-input');
+input.onchange = loadIfc;
+async function loadIfc(event) {
+    const file = event.target.files[0];
+    const url = URL.createObjectURL(file);
+    // Export to glTF and JSON
+    const result = await viewer.GLTF.exportIfcFileAsGltf({
+        ifcFileUrl: url,
+        splitByFloors: false,
+        categories: {
+            walls: [IFCWALL, IFCWALLSTANDARDCASE],
+            slabs: [IFCSLAB],
+            windows: [IFCWINDOW],
+            curtainwalls: [IFCBEAM, IFCMEMBER, IFCCOLUMN, IFCMECHANICALFASTENER, IFCMEMBERTYPE, IFCCOLUMNTYPE, IFCCOLUMNSTANDARDCASE, IFCPLATE, IFCCURTAINWALL, IFCMATERIAL],
+            doors: [IFCDOOR]
+        },
+        getProperties: false
     });
+    // Download result
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    for(const categoryName in result.gltf) {
+        const category = result.gltf[categoryName];
+        for(const levelName in category) {
+            const file = category[levelName].file;
+            if(file) {
+                link.download = `${file.name}_${categoryName}_${levelName}.gltf`;
+                link.href = URL.createObjectURL(file);
+                link.click();
+            }
+        }
+    }
+    for(let jsonFile of result.json) {
+        link.download = `${jsonFile.name}.json`;
+        link.href = URL.createObjectURL(jsonFile);
+        link.click();
+    }
+    link.remove();
 }
-
-// 🎨 Apply colors
-await colorizeIfcElements("IFCBEAM", colors["IFCBEAM"]);
-await colorizeIfcElements("IFCPLATE", colors["IFCPLATE"]);
-await colorizeIfcElements("IFCBOLT", colors["IFCBOLT"]);
-
-// ✅ Export to GLTF
-const exporter = new GLTFExporter();
-exporter.parse(viewer.scene, function (gltf) {
-    const blob = new Blob([JSON.stringify(gltf)], { type: "application/json" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "exported_model.gltf";
-    link.click();
-});
+window.ondblclick = () => viewer.IFC.selector.pickIfcItem(true);
+window.onmousemove = () => viewer.IFC.selector.prePickIfcItem();
